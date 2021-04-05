@@ -19,6 +19,22 @@ router.get('/', async(req,res) => {
     }
 })
 
+router.get('/idmahasiswa', async(req,res) => {
+      console.log(req.payload)
+
+    const ukmdetail = await ukmDetail.findOne({nama: req.payload._id}, "-__v").populate("ukm","-__v").populate("nama","-__v")
+
+    try {
+      res.status(200).json({
+        message: "success get data detail ukm",
+        data: ukmdetail
+      })
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+})
+
 router.post('/', async(req,res) => {
     //populate dari propertinya
     const ukmdetail = await ukmDetail.create(req.body);
